@@ -1,7 +1,10 @@
-(ns markov-elear.core
-  (:require [clojure.java.io :as io]))
+(ns markov-elear.generator
+  (:require [clojure.java.io :as io]
+            [clojure.set :as set]
+            [overtone.at-at :as overtone])
+  (:gen-class))
 
-(comment 
+(comment
   (def example-2 "And the Golden Grouse came there, And the Pobble who has no toes")
 
   (def words (clojure.string/split example #" "))
@@ -18,7 +21,7 @@
        word-transitions))
 
 (defn word-chain [word-transitions]
-  (reduce (fn [r t] (merge-with clojure.set/union r
+  (reduce (fn [r t] (merge-with set/union r
                                (let [[a b c] t]
                                  {[a b] (if c #{c} #{})})))
           {}
@@ -51,7 +54,7 @@
                           (walk-chain prefix word-chain prefix)))))
 
 
-(comment 
+(comment
   (generate-text "I am" (text->word-chain example))
 
   (generate-text "And the" (text->word-chain example-2))
@@ -78,13 +81,20 @@
                   "We, too," "For his" "And the" "But the"
                   "Are the" "The Pobble" "For the" "When we"])
 
+(def my-pool (overtone/mk-pool))
+
 (defn tweet-text []
   (generate-text (-> prefix-list shuffle first) functional-leary))
 
-(tweet-text)
+(comment (tweet-text)
+         (for [i (range 5)]
+           (tweet-text)))
 
-(for [i (range 5)]
-  (tweet-text))
+
+(defn -main [& args]
+  (overtone/every 3000 #(println (tweet-text)) my-pool))
+
+
 
 
 
