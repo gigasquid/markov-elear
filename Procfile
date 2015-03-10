@@ -1,1 +1,1 @@
-worker: java $JVM_OPTS -jar target/markov-elear-0.1.0-SNAPSHOT-standalone.jar
+worker: lein run trampoline
