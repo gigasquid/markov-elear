@@ -1,7 +1,10 @@
 (ns markov-elear.generator
   (:require [clojure.java.io :as io]
             [clojure.set :as set]
-            [overtone.at-at :as overtone])
+            [overtone.at-at :as overtone]
+            [twitter.api.restful :as twitter]
+            [twitter.oauth :as twitter-oauth]
+            [environ.core :refer [env]])
   (:gen-class))
 
 (comment
@@ -90,12 +93,18 @@
          (for [i (range 5)]
            (tweet-text)))
 
+(def my-creds (twitter-oauth/make-oauth-creds (env :app-consumer-key)
+                                              (env :app-consumer-secret)
+                                              (env :user-access-token)
+                                              (env :user-access-secret)))
+
+(defn status-update []
+  (twitter/statuses-update :oauth-creds my-creds
+                 :params {:status (tweet-text)}))
 
 (defn -main [& args]
-  (overtone/every 3000 #(println (tweet-text)) my-pool))
-
-
-
-
-
+  ;; every 8 hours
+  (println "Started up")
+  (println (tweet-text))
+  (overtone/every (* 1000 60 60 8) #(println (status-update)) my-pool))
 
