@@ -1,0 +1,27 @@
+Clojure (pronounced like "closure") is a dialect of the Lisp programming language created by Rich Hickey. Clojure is a general-purpose programming language with an emphasis on functional programming. It runs on the Java Virtual Machine, Common Language Runtime, and JavaScript engines. Like other Lisps, Clojure treats code as data and has a macro system.
+Clojure's focus on programming with immutable values and explicit
+progression-of-time constructs are intended to facilitate the
+development of more robust programs, particularly multithreaded ones.
+Rich Hickey is the creator of the Clojure programming language, with work experience on scheduling systems, broadcast automation, audio analysis and fingerprinting, database design, yield management, exit poll systems, and machine listening. Before Clojure, he developed dotLisp, a similar project based on the .NET platform.
+Hickey spent about 2½ years working on Clojure before publicly releasing it, much of that time working exclusively on Clojure without external funding. At the end of this period Hickey sent an email announcing the language to some friends in the Common Lisp community.
+Hickey developed Clojure because he wanted a modern Lisp for functional programming, symbiotic with the established Java platform, and designed for concurrency.
+Clojure's approach to state is characterized by the concept of
+identities, which represent it as a series of immutable states over
+time. Since states are immutable values, any number of workers can
+operate on them in parallel, and concurrency becomes a question of
+managing changes from one state to another. For this purpose, Clojure
+provides several mutable reference types, each having well-defined
+semantics for the transition between states.
+Like most other Lisps, Clojure's syntax is built on S-expressions that are first parsed into data structures by a reader before being compiled. Clojure's reader supports literal syntax for maps, sets and vectors in addition to lists, and these are compiled to the mentioned structures directly. Clojure is a Lisp-1, and is not intended to be code-compatible with other dialects of Lisp.
+Clojure's macro system is very similar to that in Common Lisp with the exception that Clojure's version of the backquote (called "syntax quote") qualifies symbols with their namespace. This helps prevent unintended name capture, as binding to namespace-qualified names is forbidden. It is possible to force a capturing macro expansion, but this must be done explicitly. Clojure does not allow user-defined reader macros, but the reader supports a more constrained form of syntactic extension.
+Tight Java integration: Clojure applications can be easily packaged and deployed to JVMs and application servers. The included standard library provides macros which make it simple to use existing Java APIs. Likewise, Clojure internals and Clojure code are easily accessible from Java. The community uses leiningen for project automation, which integrates with the Maven Java library ecosystem.
+Dynamic development with a read-eval-print loop.
+Functions as first-class objects.
+Emphasis on recursion and higher-order functions instead of side-effect-based looping.
+Lazy sequences.
+Provides a rich set of immutable, persistent data structures (including hashmaps, sets and lists).
+Concurrent programming through software transactional memory, an agent system, and a dynamic var system.
+Multimethods to allow dynamic dispatch on the types and values of any set of arguments (cf. the usual object-oriented polymorphism which dispatches on the type of what is effectively the first method argument).
+Protocols and Datatypes, which provide a high-performance, dynamic polymorphism construct as an alternative to interfaces, while avoiding the Expression Problem.
+Limit of 4 primitive parameters
+

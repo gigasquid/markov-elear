@@ -1,0 +1,32 @@
+In functional programming, a monad is a structure that represents computations defined as sequences of steps: a type with a monad structure defines what it means to chain operations, or nest functions of that type together. This allows the programmer to build pipelines that process data in steps, in which each action is decorated with additional processing rules provided by the monad. As such, monads have been described as "programmable semicolons"; a semicolon is the operator used to chain together individual statements in many imperative programming languages, thus the expression implies that extra code will be executed between the statements in the pipeline. Monads have also been explained with a physical metaphor as assembly lines, where a conveyor belt transports data between functional units that transform it one step at a time. They can also be seen as a functional design pattern to build generic types.
+Purely functional programs can use monads to structure procedures that include sequenced operations like those found in structured programming. Many common programming concepts can be described in terms of a monad structure, including side effects such as input/output, variable assignment, exception handling, parsing, nondeterminism, concurrency, and continuations. This allows these concepts to be defined in a purely functional manner, without major extensions to the language's semantics. Languages like Haskell provide monads in the standard core, allowing programmers to reuse large parts of their formal definition and apply in many different libraries the same interfaces for combining functions
+Formally, a monad consists of a type constructor M and two operations, bind and return (where return is often also called unit):
+The return operation takes a value from a plain type and puts it into a monadic container using the constructor, creating a monadic value.
+The bind operation takes as its arguments a monadic value and a function from a plain type to a monadic value, and returns a new monadic value.
+The operations must fulfill several properties to allow the correct composition of monadic functions (i.e. functions that use values from the monad as their arguments or return value). Because a monad can insert additional operations around a program's domain logic, monads can be considered a sort of aspect-oriented programming.[7] The domain logic can be defined by the application programmer in the pipeline, while required aside bookkeeping operations can be handled by a pre-defined monad built in advance.
+The name and concept comes from category theory, where monads are one
+particular kind of functor, a mapping between categories; although the
+term monad in functional programming contexts is usually used with a
+meaning corresponding to that of the term strong monad in category
+theory.
+The concept of monad programming appeared in the 1980s in the programming language Opal even though it was called "commands" and never formally specified.[citation needed]
+Eugenio Moggi first described the general use of monads to structure programs in 1991. Several people built on his work, including programming language researchers Philip Wadler and Simon Peyton Jones (both of whom were involved in the specification of Haskell). Early versions of Haskell used a problematic "lazy list" model for I/O, and Haskell 1.3 introduced monads as a more flexible way to combine I/O with lazy evaluation.
+In addition to I/O, programming language researchers and Haskell library designers have successfully applied monads to topics including parsers and programming language interpreters. The concept of monads along with the Haskell do-notation for them has also been generalized to form applicative functors and arrows.
+For a long time, Haskell and its derivatives have been the only major
+users of monads in programming. There also exist formulations in
+Scheme, Perl, Python, Racket, Clojure and Scala, and monads have been
+an option in the design of a new ML standard. Recently F# has included
+a feature called computation expressions or workflows, which are an
+attempt to introduce monadic constructs within a syntax more palatable
+to those programmers whose only prior experience has been with
+imperative languages.
+The Haskell programming language is a functional language that makes heavy use of monads, and includes syntactic sugar to make monadic composition more convenient. All of the code samples in this article are written in Haskell unless noted otherwise.
+We demonstrate two common examples given when introducing monads: the Maybe monad and the I/O monad. Monads are of course not restricted to the Haskell language, though: the second set of examples shows the Writer monad in JavaScript.
+Consider the option type Maybe a, representing a value that is either a single value of type a, or no value at all. To distinguish these, we have two algebraic data type constructors: Just t, containing the value t, or Nothing, containing no value.
+data Maybe t = Just t | Nothing 
+
+In a purely functional language, such as Haskell, functions cannot have any externally visible side effects as part of the function semantics. Although a function cannot directly cause a side effect, it can construct a value describing a desired side effect, that the caller should apply at a convenient time.[10] In the Haskell notation, a value of type IO a represents an action that, when performed, produces a value of type a.
+We can think of a value of type IO as an action that takes as its argument the current state of the world, and will return a new world where the state has been changed according to the function's return value. For example, the functions doesFileExist and removeFile in the standard Haskell library have the following types
+Free monads are similar to free monoids, in that they, intuitively speaking, are generic structures that fulfill the monad (monoid) laws without depending on the type in question.
+For any type t, the free monoid of t is [t], with ++ as the associative binary operation and [] as the unit element. In Haskell, we can write this as:
+Comonads are the categorical dual of monads. They are defined by a type constructor W T and two operations: extract with type W T → T for any T, and extend with type (W T → T' ) → W T → W T' . The operations extend and extract are expected to satisfy these laws:
