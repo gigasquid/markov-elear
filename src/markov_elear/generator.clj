@@ -7,22 +7,6 @@
             [environ.core :refer [env]])
   (:gen-class))
 
-(comment
-  (def example-2 "And the Golden Grouse came there, And the Pobble who has no toes")
-
-  (def words (clojure.string/split example #" "))
-
-  (def word-transitions (partition-all 3 1 words))
-
-  (merge-with concat {:a [1]} {:a [3]})
-  (merge-with clojure.set/union {:a #{1}} {:a #{2}})
-  (clojure.set/union  #{1} #{2})
-
-
-  (map (fn [t] (let [[a b c] t]
-                {[a b] (if c [c] [])}))
-       word-transitions))
-
 (defn word-chain [word-transitions]
   (reduce (fn [r t] (merge-with set/union r
                                (let [[a b c] t]
@@ -56,21 +40,6 @@
     (apply str (interpose " "
                           (walk-chain prefix word-chain prefix)))))
 
-
-(comment
-  (generate-text "I am" (text->word-chain example))
-
-  (generate-text "And the" (text->word-chain example-2))
-
-  (generate-text "On the" (text->word-chain quangle-1))
-  (generate-text  (text->word-chain quangle-1))
-
-  (clojure.string/split "abcdefg" #"[a|d]")
-
-  (slurp "resources/quangle-wangle.txt")
-  (slurp "./resources/quangle-wangle.txt")
-  (slurp (io/resource "blubber.txt")))
-
 (defn process-file [fname]
   (text->word-chain
    (slurp (io/resource fname))))
@@ -89,9 +58,6 @@
 (defn tweet-text []
   (generate-text (-> prefix-list shuffle first) functional-leary))
 
-(comment (tweet-text)
-         (for [i (range 5)]
-           (tweet-text)))
 
 (def my-creds (twitter-oauth/make-oauth-creds (env :app-consumer-key)
                                               (env :app-consumer-secret)
