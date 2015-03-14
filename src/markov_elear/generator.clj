@@ -67,9 +67,10 @@
 (defn status-update []
   (let [tweet (tweet-text)]
     (println "generated tweet is :" tweet)
-    (try (twitter/statuses-update :oauth-creds my-creds
-                                  :params {:status tweet})
-         (catch Exception e (println "Oh no! " (.getMessage e))))))
+    (when (not-empty? tweet)
+      (try (twitter/statuses-update :oauth-creds my-creds
+                                    :params {:status tweet})
+           (catch Exception e (println "Oh no! " (.getMessage e)))))))
 
 (defn -main [& args]
   ;; every 8 hours
