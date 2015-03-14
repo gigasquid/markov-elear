@@ -50,7 +50,13 @@
 (def prefix-list ["On the" "They went" "And all" "We think"
                   "For every" "No other" "To a" "And every"
                   "We, too," "For his" "And the" "But the"
-                  "Are the" "The Pobble" "For the" "When we"])
+                  "Are the" "The Pobble" "For the" "When we"
+                  "In the" "Yet we" "With only" "Are the"
+                  "Though the" "To do" "And when" "As soon"
+                  "We sit" "And this" "No other" "With a"
+                  "None but" "And at" "What a" "Of the"
+                  "O please" "So that" "And all" "When they"
+                  "But before" "Whoso had" "And noboby" "And it's"])
 
 (def my-pool (overtone/mk-pool))
 
@@ -67,7 +73,7 @@
 (defn status-update []
   (let [tweet (tweet-text)]
     (println "generated tweet is :" tweet)
-    (when (not-empty? tweet)
+    (when (not-empty tweet)
       (try (twitter/statuses-update :oauth-creds my-creds
                                     :params {:status tweet})
            (catch Exception e (println "Oh no! " (.getMessage e)))))))
