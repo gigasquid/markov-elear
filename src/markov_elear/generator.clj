@@ -52,11 +52,12 @@
                   "We, too," "For his" "And the" "But the"
                   "Are the" "The Pobble" "For the" "When we"
                   "In the" "Yet we" "With only" "Are the"
-                  "Though the" "To do" "And when" "As soon"
+                  "Though the"  "And when"
                   "We sit" "And this" "No other" "With a"
-                  "None but" "And at" "What a" "Of the"
+                  "And at" "What a" "Of the"
                   "O please" "So that" "And all" "When they"
-                  "But before" "Whoso had" "And noboby" "And it's"])
+                  "But before" "Whoso had" "And noboby" "And it's"
+                  "For any" "Formally a" "For example," "Also in" "In contrast"])
 
 (def my-pool (overtone/mk-pool))
 
