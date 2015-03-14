@@ -4,8 +4,7 @@
             [overtone.at-at :as overtone]
             [twitter.api.restful :as twitter]
             [twitter.oauth :as twitter-oauth]
-            [environ.core :refer [env]])
-  (:gen-class))
+            [environ.core :refer [env]]))
 
 (defn word-chain [word-transitions]
   (reduce (fn [r t] (merge-with set/union r
@@ -16,29 +15,29 @@
 
 (defn walk-chain [prefix chain result]
   (let [suffixes (get chain prefix)]
-    (if (or (> (count (apply str result)) 100) (empty? suffixes))
+    (if (or (> (count (apply str result)) 140) (empty? suffixes))
       result
       (let [n (rand-int (count suffixes))
             suffix (nth (seq suffixes) n)
             new-prefix [(last prefix) suffix]]
         (recur new-prefix chain (conj result suffix))))))
 
-
 (defn text->word-chain [s]
   (let [words (clojure.string/split s #"[\s|\n]")
         word-transitions (partition-all 3 1 words)]
     (word-chain word-transitions)))
 
-(defn generate-text [start-phrase word-chain]
-  (let [prefix (clojure.string/split start-phrase #" ")]
-    (apply str (interpose " "
-                          (walk-chain prefix word-chain prefix)))))
+(defn end-at-last-punctuation [text]
+  (let [trimmed-text (apply str (re-seq #"[\s\w]+[^.!?,]*[.!?,]" text))
+        cleaned-text (clojure.string/replace trimmed-text #",$" ".")]
+    (clojure.string/replace cleaned-text #"\"" "'")))
 
 (defn generate-text
   [start-phrase word-chain]
-  (let [prefix (clojure.string/split start-phrase #" ")]
-    (apply str (interpose " "
-                          (walk-chain prefix word-chain prefix)))))
+  (let [prefix (clojure.string/split start-phrase #" ")
+        result-chain (walk-chain prefix word-chain prefix)
+        result-text (apply str (interpose " " result-chain))]
+    (end-at-last-punctuation result-text)))
 
 (defn process-file [fname]
   (text->word-chain
