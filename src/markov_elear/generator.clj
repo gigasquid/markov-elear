@@ -4,7 +4,8 @@
             [overtone.at-at :as overtone]
             [twitter.api.restful :as twitter]
             [twitter.oauth :as twitter-oauth]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]])
+  (:gen-class))
 
 (defn word-chain [word-transitions]
   (reduce (fn [r t] (merge-with set/union r
