@@ -8,5 +8,4 @@
                  [twitter-api "0.7.8"]
                  [environ "1.0.0"]]
   :main markov-elear.generator
-  :aot [markov-elear.generator]
   :plugins [[lein-environ "1.0.0"]])
