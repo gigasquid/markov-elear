@@ -2,7 +2,6 @@
   (:require [clojure.test :refer :all]
             [markov-elear.generator :refer :all]))
 
-
 (deftest test-word-chain
   (testing "it produces a chain of the possible two step transitions between suffixes and prefixes"
     (let [example '(("And" "the" "Golden")
@@ -52,3 +51,11 @@
                  ["And" "the"] #{"Pobble" "Golden"}}]
       (is (= "the Pobble who" (generate-text "the Pobble" chain)))
       (is (= "And the Pobble who" (generate-text "And the" chain))))))
+
+(deftest test-end-at-last-puntcuation
+  (testing "Ends at the last puncuation"
+    (is (= "In a tree so happy are we."
+           (end-at-last-punctuation "In a tree so happy are we. So that")))
+    (testing "Replaces ending comma with a period"
+    (is (= "In a tree so happy are we."
+           (end-at-last-punctuation "In a tree so happy are we, So that"))))))

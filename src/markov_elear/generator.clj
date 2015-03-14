@@ -37,7 +37,7 @@
   (let [prefix (clojure.string/split start-phrase #" ")
         result-chain (walk-chain prefix word-chain prefix)
         result-text (apply str (interpose " " result-chain))]
-    (end-at-last-punctuation result-text)))
+    result-text))
 
 (defn process-file [fname]
   (text->word-chain
@@ -55,7 +55,8 @@
 (def my-pool (overtone/mk-pool))
 
 (defn tweet-text []
-  (generate-text (-> prefix-list shuffle first) functional-leary))
+  (let [text (generate-text (-> prefix-list shuffle first) functional-leary)]
+    (end-at-last-punctuation text)))
 
 
 (def my-creds (twitter-oauth/make-oauth-creds (env :app-consumer-key)
