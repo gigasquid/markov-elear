@@ -15,17 +15,16 @@
 
 (defn walk-chain [prefix chain result]
   (let [suffixes (get chain prefix)]
-    (if (or (> (count (apply str result)) 120) (empty? suffixes))
+    (if (empty? suffixes)
       result
-      (let [n (rand-int (count suffixes))
-            suffix (nth (seq suffixes) n)
-            new-prefix [(last prefix) suffix]]
-        (recur new-prefix chain (conj result suffix))))))
-
-(defn text->word-chain [s]
-  (let [words (clojure.string/split s #"[\s|\n]")
-        word-transitions (partition-all 3 1 words)]
-    (word-chain word-transitions)))
+      (let [suffix (first (shuffle suffixes))
+            new-prefix [(last prefix) suffix]
+            result-char-count (count (apply str result))
+            suffix-char-count (count suffix)
+            new-result-char-count (+ result-char-count suffix-char-count)]
+        (if (> new-result-char-count 140)
+          result
+          (recur new-prefix chain (conj result suffix)))))))
 
 (defn end-at-last-punctuation [text]
   (let [trimmed-text (apply str (re-seq #"[\s\w]+[^.!?,]*[.!?,]" text))
@@ -38,6 +37,11 @@
         result-chain (walk-chain prefix word-chain prefix)
         result-text (apply str (interpose " " result-chain))]
     result-text))
+
+(defn text->word-chain [s]
+  (let [words (clojure.string/split s #"[\s|\n]")
+        word-transitions (partition-all 3 1 words)]
+    (word-chain word-transitions)))
 
 (defn process-file [fname]
   (text->word-chain
