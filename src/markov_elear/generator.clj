@@ -19,10 +19,10 @@
       result
       (let [suffix (first (shuffle suffixes))
             new-prefix [(last prefix) suffix]
-            result-char-count (count (apply str result))
-            suffix-char-count (count suffix)
+            result-char-count (count (apply str (interpose " " result)))
+            suffix-char-count (+ 1 (count suffix))
             new-result-char-count (+ result-char-count suffix-char-count)]
-        (if (> new-result-char-count 140)
+        (if (>= new-result-char-count 140)
           result
           (recur new-prefix chain (conj result suffix)))))))
 
