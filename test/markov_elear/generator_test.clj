@@ -13,6 +13,18 @@
               ["And" "the"] #{"Pobble" "Golden"}}
              (word-chain example))))))
 
+(deftest test-text->word-chain
+  (testing "string with spaces and newlines"
+    (let [example "And the Golden Grouse\nAnd the Pobble who"]
+     (is ( = {["who" nil] #{}
+              ["Pobble" "who"] #{}
+              ["the" "Pobble"] #{"who"}
+              ["Grouse" "And"] #{"the"}
+              ["Golden" "Grouse"] #{"And"}
+              ["the" "Golden"] #{"Grouse"}
+              ["And" "the"] #{"Pobble" "Golden"}}
+             (text->word-chain example))))))
+
 (deftest test-walk-chain
   (let [chain {["who" nil] #{},
                ["Pobble" "who"] #{},
@@ -37,17 +49,6 @@
                  (count (apply str (walk-chain prefix chain prefix)))))
           (is (= ["And" "the" "Golden" "Grouse" "And" "the" "Golden" "Grouse"]
                  (take 8 (walk-chain prefix chain prefix)))))))))
-
-(deftest test-text->word-chain
-  (let [example "And the Golden Grouse And the Pobble who"]
-    (is ( = {["who" nil] #{}
-             ["Pobble" "who"] #{}
-             ["the" "Pobble"] #{"who"}
-             ["Grouse" "And"] #{"the"}
-             ["Golden" "Grouse"] #{"And"}
-             ["the" "Golden"] #{"Grouse"}
-             ["And" "the"] #{"Pobble" "Golden"}}
-            (text->word-chain example)))))
 
 (deftest test-generate-text
   (with-redefs [shuffle (fn [c] c)]
