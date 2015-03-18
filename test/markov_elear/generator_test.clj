@@ -13,7 +13,6 @@
               ["And" "the"] #{"Pobble" "Golden"}}
              (word-chain example))))))
 
-
 (deftest test-walk-chain
   (let [chain {["who" nil] #{},
                ["Pobble" "who"] #{},

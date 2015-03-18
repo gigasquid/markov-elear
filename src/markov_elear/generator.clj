@@ -26,11 +26,6 @@
           result
           (recur new-prefix chain (conj result suffix)))))))
 
-(defn end-at-last-punctuation [text]
-  (let [trimmed-text (apply str (re-seq #"[\s\w]+[^.!?,]*[.!?,]" text))
-        cleaned-text (clojure.string/replace trimmed-text #",$" ".")]
-    (clojure.string/replace cleaned-text #"\"" "'")))
-
 (defn generate-text
   [start-phrase word-chain]
   (let [prefix (clojure.string/split start-phrase #" ")
@@ -64,6 +59,11 @@
                   "For any" "Formally a" "For example," "Also in" "In contrast"])
 
 (def my-pool (overtone/mk-pool))
+
+(defn end-at-last-punctuation [text]
+  (let [trimmed-text (apply str (re-seq #"[\s\w]+[^.!?,]*[.!?,]" text))
+        cleaned-text (clojure.string/replace trimmed-text #",$" ".")]
+    (clojure.string/replace cleaned-text #"\"" "'")))
 
 (defn tweet-text []
   (let [text (generate-text (-> prefix-list shuffle first) functional-leary)]
