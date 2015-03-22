@@ -1,13 +1,11 @@
 (ns markov-elear.generator
-  (:require [clojure.java.io :as io]
-            [clojure.set :as set]
-            [overtone.at-at :as overtone]
+  (:require [overtone.at-at :as overtone]
             [twitter.api.restful :as twitter]
             [twitter.oauth :as twitter-oauth]
             [environ.core :refer [env]]))
 
 (defn word-chain [word-transitions]
-  (reduce (fn [r t] (merge-with set/union r
+  (reduce (fn [r t] (merge-with clojure.set/union r
                                (let [[a b c] t]
                                  {[a b] (if c #{c} #{})})))
           {}
@@ -44,7 +42,7 @@
 
 (defn process-file [fname]
   (text->word-chain
-   (slurp (io/resource fname))))
+   (slurp (clojure.java.io/resource fname))))
 
 (def files ["quangle-wangle.txt" "monad.txt" "clojure.txt" "functional.txt"
             "jumblies.txt" "pelican.txt" "pobble.txt"])
