@@ -60,7 +60,6 @@
                   "But before" "Whoso had" "And noboby" "And it's"
                   "For any" "Formally a" "For example," "Also in" "In contrast"])
 
-(def my-pool (overtone/mk-pool))
 
 (defn end-at-last-punctuation [text]
   (let [trimmed-to-last-punct (apply str (re-seq #"[\s\w]+[^.!?,]*[.!?,]" text))
@@ -89,6 +88,8 @@
       (try (twitter/statuses-update :oauth-creds my-creds
                                     :params {:status tweet})
            (catch Exception e (println "Oh no! " (.getMessage e)))))))
+
+(def my-pool (overtone/mk-pool))
 
 (defn -main [& args]
   ;; every 8 hours
