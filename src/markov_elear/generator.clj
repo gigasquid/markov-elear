@@ -63,8 +63,12 @@
 (def my-pool (overtone/mk-pool))
 
 (defn end-at-last-punctuation [text]
-  (let [trimmed-text (apply str (re-seq #"[\s\w]+[^.!?,]*[.!?,]" text))
-        cleaned-text (clojure.string/replace trimmed-text #",$" ".")]
+  (let [trimmed-to-last-punct (apply str (re-seq #"[\s\w]+[^.!?,]*[.!?,]" text))
+        trimmed-to-last-word (apply str (re-seq #".*[^a-zA-Z]+" text))
+        result-text (if (empty? trimmed-to-last-punct)
+                      trimmed-to-last-word
+                      trimmed-to-last-punct)
+        cleaned-text (clojure.string/replace result-text #"[,| ]$" ".")]
     (clojure.string/replace cleaned-text #"\"" "'")))
 
 (defn tweet-text []

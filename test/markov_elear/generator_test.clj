@@ -68,4 +68,7 @@
            (end-at-last-punctuation "In a tree so happy are we. So that")))
     (testing "Replaces ending comma with a period"
     (is (= "In a tree so happy are we."
-           (end-at-last-punctuation "In a tree so happy are we, So that"))))))
+           (end-at-last-punctuation "In a tree so happy are we, So that"))))
+    (testing "If there are no previous puncations, just leave it alone and add one at the end"
+      (is ( = "In the light of the blue moon."
+              (end-at-last-punctuation  "In the light of the blue moon there"))))))
