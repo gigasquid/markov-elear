@@ -58,7 +58,7 @@
                   "And at" "What a" "Of the"
                   "O please" "So that" "And all" "When they"
                   "But before" "Whoso had" "And noboby" "And it's"
-                  "For any" "Formally a" "For example," "Also in" "In contrast"])
+                  "For any" "For example," "Also in" "In contrast"])
 
 
 (defn end-at-last-punctuation [text]
