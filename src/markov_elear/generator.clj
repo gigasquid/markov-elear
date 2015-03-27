@@ -57,7 +57,7 @@
                   "We sit" "And this" "No other" "With a"
                   "And at" "What a" "Of the"
                   "O please" "So that" "And all" "When they"
-                  "But before" "Whoso had" "And noboby" "And it's"
+                  "But before" "Whoso had" "And nobody" "And it's"
                   "For any" "For example," "Also in" "In contrast"])
 
 
