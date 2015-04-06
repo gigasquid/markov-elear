@@ -71,4 +71,7 @@
            (end-at-last-punctuation "In a tree so happy are we, So that"))))
     (testing "If there are no previous puncations, just leave it alone and add one at the end"
       (is ( = "In the light of the blue moon."
-              (end-at-last-punctuation  "In the light of the blue moon there"))))))
+              (end-at-last-punctuation  "In the light of the blue moon there"))))
+    (testing "works with multiple punctuation"
+      (is ( = "In the light of the blue moon.  We danced merrily."
+              (end-at-last-punctuation  "In the light of the blue moon.  We danced merrily.  Be"))))))
